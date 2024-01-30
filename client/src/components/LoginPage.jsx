@@ -1,25 +1,93 @@
+import { Link, useNavigate } from "react-router-dom";
 import CountryCode from "../Library/CountryCode";
 import Header from "./Header";
+import { useState } from "react";
 
 const LoginPage = () => {
+  const [isEmail, setIsEmail] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
+
+  const inputLogin = (event, input) => {
+    if (input === "email") {
+      setEmail(event.target.value);
+    } else if (input === "password") {
+      setPassword(event.target.value);
+    }
+  };
+  const loginUser = (ev) => {
+    ev.preventDefault();
+    try {
+      fetch("http://localhost:4000/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log("data", data));
+      setRedirect(true);
+    } catch (e) {
+      console.error("Error:", error);
+    }
+    console.log("redirect", redirect);
+    if (redirect) {
+      navigate("/");
+    }
+  };
+  const isEmailPressed = () => {
+    setIsEmail(true);
+  };
+
   return (
     <div className="flex justify-center items-center">
       <div className=" flex flex-col w-2/5  justify-center  items-center border border-slate-400 rounded-lg">
         <p className="font-semibold pt-5">Log in or sign up </p>
         <hr class="h-px my-5 bg-gray-100 border-t w-full " />
-        <div className="px-10">
+        <div className="px-10 w-full">
           <h2 className=" text-xl py-5 font-semibold">Welcome to Airbnb</h2>
-          <CountryCode />
-          <p className="py-3 text-xs text-slate-500">
-            We’ll call or text you to confirm your number. Standard message and
-            data rates apply.{" "}
-            <span className="text-slate-900 underline font-semibold">
-              Privacy Policy
-            </span>{" "}
-          </p>
-          <button className=" w-full bg-primary rounded-lg py-4 text-white">
-            Continue
-          </button>
+          {isEmail ? (
+            <form className="flex flex-col" onSubmit={loginUser}>
+              <input
+                type="email"
+                placeholder="email"
+                value={email}
+                onChange={(event) => {
+                  inputLogin(event, "email");
+                }}
+              ></input>
+              <input
+                type="password"
+                placeholder="password"
+                value={password}
+                onChange={(event) => {
+                  inputLogin(event, "password");
+                }}
+              ></input>
+              <button className=" w-full bg-primary rounded-lg py-4 text-white mt-3">
+                Submit
+              </button>
+            </form>
+          ) : (
+            <div>
+              <CountryCode />
+              <p className="py-3 text-xs text-slate-500">
+                We’ll call or text you to confirm your number. Standard message
+                and data rates apply.{" "}
+                <span className="text-slate-900 underline font-semibold">
+                  Privacy Policy
+                </span>{" "}
+              </p>
+              <button className=" w-full bg-primary rounded-lg py-4 text-white">
+                Continue
+              </button>
+            </div>
+          )}
+
           <div class="inline-flex items-center justify-center w-full">
             <hr class="w-full h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
             <span class="absolute px-3 font-light text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">
@@ -60,7 +128,10 @@ const LoginPage = () => {
             </svg>
             <p className="pl-44 text-sm">Continue with apple</p>
           </div>
-          <div className="flex justify-start border border-slate-400 w-full py-4 rounded-lg pl-10 mb-4">
+          <div
+            className="flex justify-start border border-slate-400 w-full py-4 rounded-lg pl-10 mb-4"
+            onClick={isEmailPressed}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -71,6 +142,11 @@ const LoginPage = () => {
             </svg>
             <p className="pl-44 text-sm">Continue with email</p>
           </div>
+          <Link to="/register">
+            <button className="w-full bg-secondary rounded-lg py-4 text-white">
+              Register
+            </button>
+          </Link>
         </div>
       </div>
     </div>
