@@ -25,6 +25,7 @@ const RegisterPage = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ name, email, password }),
     })
       .then((response) => response.json())

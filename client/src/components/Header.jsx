@@ -1,6 +1,15 @@
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { UserContext } from "../context/UserContext/userContext";
+import Account from "./Account";
 const Header = () => {
+  const { user } = useContext(UserContext);
+  const [accountOpen, setAccountOpen] = useState(false);
+
+  const closeAccountDetails = () => {
+    setAccountOpen(!accountOpen);
+  };
+  console.log("user headerrr", user);
   return (
     <>
       <header className="flex justify-between px-4 py-3">
@@ -73,7 +82,9 @@ const Header = () => {
                 />
               </svg>
             </Link>
+            <p onClick={closeAccountDetails}>{user?.name}</p>
           </div>
+          <div> {accountOpen && <Account />}</div>
         </div>
       </header>
     </>

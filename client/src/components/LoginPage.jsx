@@ -1,13 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import CountryCode from "../Library/CountryCode";
 import Header from "./Header";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserContext/userContext";
 
 const LoginPage = () => {
   const [isEmail, setIsEmail] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const inputLogin = (event, input) => {
@@ -17,24 +19,40 @@ const LoginPage = () => {
       setPassword(event.target.value);
     }
   };
-  const loginUser = (ev) => {
+  const loginUser = async (ev) => {
     ev.preventDefault();
-    try {
-      fetch("http://localhost:4000/login", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log("data", data));
-      setRedirect(true);
-    } catch (e) {
-      console.error("Error:", error);
+    const response = await fetch("http://localhost:4000/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    console.log("redirect", redirect);
+
+    const userInfo = await response.json();
+    setRedirect(true);
+    console.log("redirect");
+    setUser(userInfo);
+
+    // .then((response) => {
+    //   console.log("respone", response.json());
+    //   response.json();
+    // })
+    // .then((data) => {
+    //   setRedirect(true);
+    //   console.log("data", data), console.log("redirect", redirect);
+    //   alert("login successfully");
+    // });
+    // } catch (e) {
+    //   console.error("Error:", error);
+    // }
+
     if (redirect) {
       navigate("/");
     }
@@ -143,7 +161,7 @@ const LoginPage = () => {
             <p className="pl-44 text-sm">Continue with email</p>
           </div>
           <Link to="/register">
-            <button className="w-full bg-secondary rounded-lg py-4 text-white">
+            <button className="w-full bg-secondary rounded-lg py-4 text-white  mb-4">
               Register
             </button>
           </Link>
