@@ -9,11 +9,13 @@ const Header = () => {
   const closeAccountDetails = () => {
     setAccountOpen(!accountOpen);
   };
-  console.log("user headerrr", user);
   return (
     <>
       <header className="flex justify-between px-4 py-3">
-        <div className="flex text-center gap-1 items-center text-rose-500">
+        <Link
+          to="/"
+          className="flex text-center gap-1 items-center text-rose-500"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -23,7 +25,7 @@ const Header = () => {
             <path d="M3.105 2.288a.75.75 0 0 0-.826.95l1.414 4.926A1.5 1.5 0 0 0 5.135 9.25h6.115a.75.75 0 0 1 0 1.5H5.135a1.5 1.5 0 0 0-1.442 1.086l-1.414 4.926a.75.75 0 0 0 .826.95 28.897 28.897 0 0 0 15.293-7.155.75.75 0 0 0 0-1.114A28.897 28.897 0 0 0 3.105 2.288Z" />
           </svg>
           <p className="font-bold text-red text-rose-500 text-lg">airbnb</p>
-        </div>
+        </Link>
         <div className="flex border px-4 py-2 rounded-full gap-2 shadow-md items-center">
           <div>Anyware</div>
           <div className="border border-grey-50"></div>

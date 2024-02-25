@@ -37,7 +37,6 @@ const LoginPage = () => {
 
     const userInfo = await response.json();
     setRedirect(true);
-    console.log("redirect");
     setUser(userInfo);
 
     // .then((response) => {
@@ -65,7 +64,7 @@ const LoginPage = () => {
     <div className="flex justify-center items-center">
       <div className=" flex flex-col w-2/5  justify-center  items-center border border-slate-400 rounded-lg">
         <p className="font-semibold pt-5">Log in or sign up </p>
-        <hr class="h-px my-5 bg-gray-100 border-t w-full " />
+        <hr className="h-px my-5 bg-gray-100 border-t w-full " />
         <div className="px-10 w-full">
           <h2 className=" text-xl py-5 font-semibold">Welcome to Airbnb</h2>
           {isEmail ? (

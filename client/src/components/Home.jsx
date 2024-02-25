@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
+// import { Carousel } from "@material-tailwind/react";
+
 import { Categories } from "./Categories";
+import { Places } from "./Places";
 
-export const Home = () => {
-  const [places, setPlaces] = useState([{}]);
-  console.log("places homee", places);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("http://localhost:4000/home");
-      console.log("response fetch data", response);
-      const places = await response.json();
-      setPlaces(places);
-      console.log("places fetch data", places.data);
-    };
-
-    fetchData();
-  }, []);
+export const Home = ({ places }) => {
   return (
-    <div>
+    <div className="box-border">
       <Categories />
+      <Places places={places} />
     </div>
   );
 };

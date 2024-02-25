@@ -1,24 +1,28 @@
 import { TbBeach } from "react-icons/tb";
-import { MdCabin } from "react-icons/md";
 import { VscCoffee } from "react-icons/vsc";
 import { TfiViewGrid } from "react-icons/tfi";
-import { GiBowlingPin } from "react-icons/gi";
-import { Category } from "./Category";
-import { IoFlameOutline } from "react-icons/io5";
-import { MdOutlineCastle } from "react-icons/md";
-import { MdOutlinePool } from "react-icons/md";
-import { MdDownhillSkiing } from "react-icons/md";
-import { GiIsland } from "react-icons/gi";
-import { MdOutlineSurfing } from "react-icons/md";
-import { GiCarKey } from "react-icons/gi";
-import { IoBoatSharp } from "react-icons/io5";
-import { GiGrandPiano } from "react-icons/gi";
-import { GiDesert } from "react-icons/gi";
-import { MdHouseboat } from "react-icons/md";
-import { FaUmbrellaBeach } from "react-icons/fa";
-import { MdGolfCourse } from "react-icons/md";
-import { useState } from "react";
 
+import { IoFlameOutline, IoBoatSharp } from "react-icons/io5";
+import {
+  MdOutlineCastle,
+  MdOutlinePool,
+  MdDownhillSkiing,
+  MdOutlineSurfing,
+  MdHouseboat,
+  MdCabin,
+  MdGolfCourse,
+} from "react-icons/md";
+
+import {
+  GiIsland,
+  GiCarKey,
+  GiGrandPiano,
+  GiDesert,
+  GiBowlingPin,
+} from "react-icons/gi";
+import { FaUmbrellaBeach } from "react-icons/fa";
+import { FaTents } from "react-icons/fa6";
+import { Category } from "./Category";
 const categories = [
   {
     id: 1,
@@ -105,16 +109,21 @@ const categories = [
     icon: <FaUmbrellaBeach size={24} />,
     label: "Beach",
   },
-  //   {
-  //     id: 5,
-  //     icon: <MdGolfCourse size={24} />,
-  //     label: "Golfing",
-  //   },
+  {
+    id: 18,
+    icon: <MdGolfCourse size={24} />,
+    label: "Golfing",
+  },
+  {
+    id: 19,
+    icon: <FaTents size={24} />,
+    label: "Tent",
+  },
 ];
 
 export const Categories = () => {
   return (
-    <div className="flex gap-10 my-5 border-t py-6 justify-center">
+    <div className="flex gap-8 my-5 border-t py-6 justify-center overflow-hidden">
       {categories.map((cat) => {
         return <Category key={cat.id} icon={cat.icon} label={cat.label} />;
       })}

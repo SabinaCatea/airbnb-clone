@@ -20,14 +20,14 @@ app.use(
   cors({
     preflightContinue: true,
     credentials: true,
-    origin: "http://127.0.0.1:5173",
+    origin: "*",
     exposedHeaders: ["set-cookie"],
     accessControlAllowCredeantials: true,
   })
 );
+// origin: "http://localhost:5173/",
 app.use(cookieParser());
 //"mongodb://0.0.0.0:27017/airbnb"
-console.log("mmm", dbURL);
 mongoose.connect("mongodb://0.0.0.0:27017/airbnb");
 const conf = {
   signed: true,
@@ -37,16 +37,20 @@ const conf = {
   httpOnly: false,
 };
 
-app.get("/home", async (req, res) => {
+app.get("/", async (req, res) => {
   const places = await Place.find();
   res.json(places);
-  console.log("placesssss", places);
+});
+
+app.get("/place/:id", async (req, res) => {
+  const { id } = req.params;
+  const place = await Place.findById(id);
+  res.json(place);
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const userDoc = await User.findOne({ email });
-  console.log("eeee", userDoc);
   let found = false;
   if (userDoc) {
     const passwordCheck = bcrypt.compareSync(password, userDoc.password);
@@ -73,11 +77,7 @@ app.post("/login", async (req, res) => {
   }
 });
 app.get("/login", (req, res) => {
-  // console.log("reqqqq=======>", req.cookies);
-  // res.json(req.cookies);
-  // console.log("cookies");
   res.cookie("login", "logindetails", conf);
-  res.send("ok you sned a cookie");
 });
 // app.get("/test", (req, res) => {
 //   // const { token } = req.cookies;
