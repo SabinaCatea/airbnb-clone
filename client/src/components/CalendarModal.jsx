@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import OptionModal from "./OptionModal";
 export const CalendarModal = ({ price }) => {
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -57,14 +58,11 @@ export const CalendarModal = ({ price }) => {
           </div>
 
           <div className="p-2 col-start-1 col-end-3 border-t border-slate-300">
-            <p className="text-xs font-bold">OASPETI</p>
-            <select>
-              <option value="adults">
-                <div>
-                  <div className=" flex-col"></div>
-                </div>
-              </option>
-            </select>
+            <div>
+              <p className="text-xs font-bold">GUESTS</p>
+              <p className="text-sm">nr.of quests</p>
+            </div>
+            <OptionModal />
           </div>
         </div>
       </div>

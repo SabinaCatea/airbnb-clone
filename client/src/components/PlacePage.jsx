@@ -3,12 +3,12 @@ import { FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { randomNumber } from "../utils/randomNumber";
 import CalendarModal from "./CalendarModal";
-
+import OptionModal from "./OptionModal";
 const placePage = () => {
   const { id } = useParams();
   const [place, setplace] = useState(null);
-  const [isOpen, setIsOpen] = useState(true);
 
+  const [isOpen, setIsOpen] = useState(true);
   useEffect(() => {
     if (!id) {
       return;
@@ -115,15 +115,15 @@ const placePage = () => {
           <div className="">
             <p
               className={`
-            ${isOpen && "line-clamp-3"}
-            `}
+                ${isOpen && "line-clamp-3"}
+                `}
             >
               {place?.description}
             </p>
             <button
               className="mt-5 border-slate-100 border rounded-lg px-5 py-2 bg-slate-100"
               onClick={() => {
-                console.log("clicked", isOpen);
+                console.log("is open", isOpen);
                 setIsOpen(!isOpen);
               }}
             >
